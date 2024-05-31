@@ -3,59 +3,166 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
     <link rel="stylesheet" href="SRC/Style.css" />
-    <title>My weather application</title>
+    <title>Weather App</title>
   </head>
   <body>
-    <div class="weather-app">
-      <header>
-        <form id="search-form">
-          <input
-            type="search"
-            placeholder="Enter a city.."
-            required
-            class="search-input"
-            id="search-input"
-          />
-          <input type="submit" value="Search" class="search-button" />
-        </form>
-      </header>
-      <main>
-        <div class="current-weather">
-          <div>
-            <h1 class="current-city" id="current-city">Paris</h1>
-            <p class="current-details">
-              <span id="current-date"></span>, moderate rain <br />
-              Humidity: <strong>87%</strong>, Wind: <strong>7.2km/h</strong>
-            </p>
+    <div class="background-video-container">
+      <video autoplay muted loop id="background-video">
+        <source src="images/Mist.mp4" type="video/mp4" />
+        Your browser does not support HTML5 video.
+      </video>
+    </div>
+    <div class="weather-container">
+      <form id="search-form">
+        <input type="text" id="cityInput" placeholder="Enter city" required />
+        <button class="submit" type="submit">Search</button>
+        <button class="location" type="submit">Use Location 📍</button>
+      </form>
+      <div id="weather-info">
+        <div id="city-date">
+        <h1 id="city">Phalaborwa</h1>
+        <div id="date">Monday, 27 May</div>
+        </div>
+        <div id="icon">🌤️</div>
+        <div id="temperature"><strong>H: 38º</strong> L: 20º</div>
+        <div id="description">Scattered Clouds</div>
+        <div id="humidity">Humidity: 60%</div>
+        <div id="wind-speed">Wind Speed: 3km/h</div>
+        <div id="time">Last Updated: 12:56</div>
+        
+      </div>
+      <br>
+      <div id="weatherData"></div>
+      <div class="weather-forecast">
+        <div class="weather-hourly-forecast">
+          <div class="weather-forecast-hour">
+            <div class="weather-forecast-time">13:00</div>
+            <div class="weather-forecast-icon">🌤️</div>
+            <div class="weather-forecast-temperature">25ºC</div>
           </div>
-          <div class="current-temperature">
-            <span class="current-temperature-icon">☀️</span
-            ><span class="current-temperature-value" id="current-temperature"
-              >24</span
-            ><span class="current-temperature-unit">°C</span>
+          <div class="weather-forecast-hour">
+            <div class="weather-forecast-time">14:00</div>
+            <div class="weather-forecast-icon">🌤️</div>
+            <div class="weather-forecast-temperature">26ºC</div>
+          </div>
+          <div class="weather-forecast-hour">
+            <div class="weather-forecast-time">15:00</div>
+              <div class="weather-forecast-icon">🌤️</div>
+              <div class="weather-forecast-temperature">27ºC</div>
+            </div>
+            <div class="weather-forecast-hour">
+              <div class="weather-forecast-time">16:00</div>
+              <div class="weather-forecast-icon">🌤️</div>
+              <div class="weather-forecast-temperature">28ºC</div>
+            </div>
+            <div class="weather-forecast-hour">
+              <div class="weather-forecast-time">17:00</div>
+              <div class="weather-forecast-icon">🌤️</div>
+              <div class="weather-forecast-temperature">29ºC</div>
+            </div>
+            <div class="weather-forecast-hour">
+              <div class="weather-forecast-time">18:00</div>
+              <div class="weather-forecast-icon">🌤️</div>
+              <div class="weather-forecast-temperature">28ºC</div>
+            </div>
+            <div class="weather-forecast-hour">
+              <div class="weather-forecast-time">19:00</div>
+              <div class="weather-forecast-icon">🌤️</div>
+              <div class="weather-forecast-temperature">27ºC</div>
+            </div>
+            <div class="weather-forecast-hour">
+              <div class="weather-forecast-time">20:00</div>
+              <div class="weather-forecast-icon">🌤️</div>
+              <div class="weather-forecast-temperature">26ºC</div>
+            </div>
+            <div class="weather-forecast-hour">
+              <div class="weather-forecast-time">21:00</div>
+              <div class="weather-forecast-icon">🌤️</div>
+              <div class="weather-forecast-temperature">25ºC</div>
+            </div>
+            <div class="weather-forecast-hour">
+              <div class="weather-forecast-time">22:00</div>
+              <div class="weather-forecast-icon">🌤️</div>
+              <div class="weather-forecast-temperature">24ºC</div>
+            </div>
+            <div class="weather-forecast-hour">
+              <div class="weather-forecast-time">23:00</div>
+              <div class="weather-forecast-icon">🌤️</div>
+              <div class="weather-forecast-temperature">23ºC</div>
+            </div>
+            <div class="weather-forecast-hour">
+              <div class="weather-forecast-time">00:00</div>
+              <div class="weather-forecast-icon">🌤️</div>
+              <div class="weather-forecast-temperature">22ºC</div>
+            </div>
+          </div>
+          <div class="weather-forecast-daily">
+            <div class="weather-forecast-day">
+              <div class="weather-forecast-date">Tue</div>
+              <div class="weather-forecast-icon">🌤️</div>
+              <div class="weather-forecast-temperatures">
+                <div class="weather-forecast-temperature">
+                  <strong>15º</strong> | 9º</div>
+              </div>
+            </div>
+            <div class="weather-forecast-day">
+              <div class="weather-forecast-date">Wedn</div>
+              <div class="weather-forecast-icon">🌤️</div>
+              <div class="weather-forecast-temperatures">
+                <div class="weather-forecast-temperature">
+                  <strong>15º</strong> | 9º</div>
+              </div>
+            </div>
+            <div class="weather-forecast-day">
+              <div class="weather-forecast-date">Thurs</div>
+              <div class="weather-forecast-icon">🌤️</div>
+              <div class="weather-forecast-temperatures">
+                <div class="weather-forecast-temperature">
+                  <strong>15º</strong> | 9º</div>
+              </div>
+            </div>
+            <div class="weather-forecast-day">
+              <div class="weather-forecast-date">Fri</div>
+              <div class="weather-forecast-icon">🌤️</div>
+              <div class="weather-forecast-temperatures">
+                <div class="weather-forecast-temperature">
+                  <strong>15º</strong> | 9º</div>
+              </div>
+            </div>
+            <div class="weather-forecast-day">
+              <div class="weather-forecast-date">Sat</div>
+              <div class="weather-forecast-icon">🌤️</div>
+              <div class="weather-forecast-temperatures">
+                <div class="weather-forecast-temperature">
+                  <strong>15º</strong> | 9º</div>
+              </div>
+            </div>
+            <div class="weather-forecast-day">
+              <div class="weather-forecast-date">Sun</div>
+              <div class="weather-forecast-icon">🌤️</div>
+              <div class="weather-forecast-temperatures">
+                <div class="weather-forecast-temperature">
+                  <strong>15º</strong> | 9º</div>
+              </div>
+            </div>
           </div>
         </div>
-      </main>
-      <footer>
-        <p>
-          This project was coded by
-          <a href="https://github.com/kayylanga/WeatherAppTrial" target="_blank"
-            >KayyLanga</a
-          >
-          and is
-          <a href="https://github.com/" target="_blank"> on GitHub</a> and
-          <a href="#" target="_blank">hosted on Netlify</a>
-        </p>
-      </footer>
+      </div>
     </div>
+    <footer>
+        This project was coded by
+        <a href="https://github.com/matthieua/" target="_blank"> Matt Delac</a>,
+        is
+        <a href="https://github.com/matthieua/meteo" target="_blank"
+          >open-sourced on GitHub</a
+        >
+        and
+        <a href="https://meteo-shecodes-app.netlify.app/" target="_blank"
+          >hosted on Netlify</a
+        >
+      </footer>
+    <script src="SRC/Edit.js"></script>
   </body>
-  <script src="SRC/Edit.js"></script>
 </html>

@@ -1,7 +1,6 @@
 body,
 html {
   margin: 0;
-  padding: 0;
   height: 100%;
   font-family: Arial, sans-serif;
   color: #f0f0f0;
@@ -36,9 +35,6 @@ html {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
-#cityInput {
-  padding: 10px 15px;
-}
 
 #search-form {
   display: flex;
@@ -46,20 +42,27 @@ html {
   margin-bottom: 20px;
 }
 
-#search-form input {
-  padding: 10px;
+#cityInput {
+  padding: 10px 200px 10px 200px;
   border: none;
-  border-radius: 5px;
-  margin-right: 10px;
+  font-size: 15px;
+  border-radius: 55px;
+  margin-right: 50px;
+  position: absolute;
+  left: 300px;
+  line-height: 28px;
 }
 
 .submit {
-  padding: 10px 15px;
+  padding: 10px 55px 10px 55px;
   border: none;
-  border-radius: 5px;
+  font-size: 15px;
+  border-radius: 55px;
   background-color: #444;
   color: #f0f0f0;
   cursor: pointer;
+  margin-left: 650px;
+  line-height: 28px;
 }
 
 .submit :hover {
@@ -67,13 +70,15 @@ html {
 }
 
 .location {
-  padding: 10px 15px;
+  padding: 10px 55px 10px 55px;
   border: none;
-  border-radius: 5px;
+  font-size: 15px;
+  border-radius: 55px;
   background-color: #444;
   color: #f0f0f0;
   cursor: pointer;
   margin-left: 10px;
+  line-height: 28px;
 }
 .location :hover {
   background-color: #565555;
@@ -92,9 +97,16 @@ html {
   margin-bottom: 20px;
 }
 
-#city {
+h1 {
   margin: 0;
+  padding: 30px 0 1px 0;
   font-size: 70px;
+  margin-right: 100px;
+}
+
+#city,
+#icon {
+  display: inline;
 }
 
 #date {
@@ -102,8 +114,8 @@ html {
   margin: 0;
 }
 
-#icon img {
-  width: 500px;
+#icon {
+  width: 100px;
 }
 
 #temperature,
@@ -169,4 +181,12 @@ html {
 .weather-forecast-day .weather-forecast-icon,
 .weather-forecast-day .weather-forecast-temperatures {
   margin: 5px 10px;
+}
+
+footer {
+  border-top: 1px solid #f9f7fe;
+  padding: 50px 0 0 0;
+  text-align: center;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.6);
 }

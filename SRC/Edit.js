@@ -14,7 +14,9 @@ function newWeather(response) {
   humidityElement.innerHTML = `${response.data.temperature.humidity}%`;
   windSpeedElement.innerHTML = `${response.data.wind.speed}km/h`;
   temperatureElement.innerHTML = Math.round(temperature);
-  iconElement.innerHTML = `<img src="${response.data.condition.icon_url}" class="weather-app-icon" />`;
+  iconElement.innerHTML = `<img src="${response.data.condition.icon_url}" class="weather-info-icon" />`;
+
+  getForecast(response.data.city);
 }
 
 function formatDate(date) {
@@ -41,38 +43,7 @@ function formatDate(date) {
 function searchCity(city) {
   let apiKey = "04odeba41247484f90fd624b3c7at438";
   let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
-
-  fetch(apiUrl)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("City not found");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      const responseData = {
-        data: {
-          city: data.name,
-          temperature: {
-            current: data.main.temp,
-            humidity: data.main.humidity,
-          },
-          wind: {
-            speed: data.wind.speed,
-          },
-          condition: {
-            description: data.weather[0].description,
-            icon_url: `http://openweathermap.org/img/wn/${data.weather[0].icon}.png`,
-          },
-        },
-      };
-
-      newWeather(responseData);
-      getForecast(city);
-    })
-    .catch((error) => {
-      console.error("Error fetching weather data:", error);
-    });
+  axios.get(apiUrl).then(newWeather);
 }
 
 function handleSearchSubmit(event) {
@@ -82,69 +53,34 @@ function handleSearchSubmit(event) {
   searchCity(searchInput.value);
 }
 
-function formatDate(date) {
-  let minutes = date.getMinutes();
-  let hours = date.getHours();
-  let days = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-  let day = days[date.getDay()];
-
-  if (minutes < 10) {
-    minutes = `0${minutes}`;
-  }
-
-  return `${day} ${hours}:${minutes}`;
-}
-
 function getForecast(city) {
   let apiKey = "04odeba41247484f90fd624b3c7at438";
-  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?lon={lon}&lat={lat}&key={key}`;
-
-  fetch(apiUrl)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Forecast data not available");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      displayForecast(data);
-    })
-    .catch((error) => {
-      console.error("Error fetching forecast data:", error);
-    });
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
+  axios(apiUrl).then(displayForecast);
 }
 
 function displayForecast(response) {
+  console.log(response.data);
+
+  let days = ["Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   let forecastHtml = "";
 
-  response.list.forEach(function (forecast, index) {
-    if (index < 5) {
-      forecastHtml += `<div class="weather-forecast-day">
-          <div class="weather-forecast-date">${formatDay(forecast.dt)}</div>
-          <img src="http://openweathermap.org/img/wn/${
-            forecast.weather[0].icon
-          }.png" class="weather-forecast-icon" />
-          <div class="weather-forecast-temperatures">
-            <div class="weather-forecast-temperature">
-              <strong>${Math.round(forecast.main.temp_max)}º</strong>
+  days.forEach(function (day) {
+    forecastHtml =
+      forecastHtml +
+      `
+      <div class="weather-forecast-day">
+              <div class="weather-forecast-date">${day}</div>
+              <div class="weather-forecast-icon">🌤️</div>
+              <div class="weather-forecast-temperatures">
+                <div class="weather-forecast-temperature">
+                  <strong>15º</strong> | 9º</div>
+              </div>
             </div>
-            <div class="weather-forecast-temperature">${Math.round(
-              forecast.main.temp_min
-            )}º</div>
-          </div>
-        </div>`;
-    }
+    `;
   });
 
-  let forecastElement = document.querySelector("#weatherData");
+  let forecastElement = document.querySelector("#forecast-daily");
   forecastElement.innerHTML = forecastHtml;
 }
 
